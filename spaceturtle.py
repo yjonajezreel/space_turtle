@@ -1,6 +1,8 @@
 #Turtle Graphics Game -- Let's Gaurrr!
 
 import turtle
+import math
+import random
 
 #Set up screen
 turtle.setup(650,650)
@@ -27,6 +29,14 @@ player.shape("turtle")
 player.penup()
 player.speed(0)
 
+#Create turtle food
+food = turtle.Turtle()
+food.color("lightgreen")
+food.shape("circle")
+food.penup()
+food.speed(0)
+food.setposition(random.randint(-290,290),random.randint(-290,290))
+
 #Tutle's speed variable
 speed = 1
 
@@ -50,6 +60,7 @@ turtle.onkey(increase_speed, 'Up')
 turtle.onkey(decrease_speed, 'Down')
 
 while True:
+
     player.forward(speed)
 
     #Boundary player checking x coordinate
@@ -59,3 +70,8 @@ while True:
     #Boundary checking Y coordinate
     if player.ycor() > 290 or player.ycor() < -290:
         player.right(180)
+
+    #Collision check
+    d = math.sqrt(math.pow(player.xcor() - food.xcor(),2) + math.pow(player.ycor() - food.ycor(),2))
+    if d < 20:
+        food.setposition(random.randint(-290,290), random.randint(-290,290))
